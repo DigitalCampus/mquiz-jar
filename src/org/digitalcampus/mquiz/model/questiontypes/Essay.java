@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.digitalcampus.mquiz.model.QuizQuestion;
 import org.digitalcampus.mquiz.model.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class Essay implements Serializable, QuizQuestion {
 	
@@ -15,8 +19,8 @@ public class Essay implements Serializable, QuizQuestion {
 	 */
 	private static final long serialVersionUID = 1531985882092686497L;
 	public static final String TAG = "Essay";
-	private String refid;
-	private String qtext;
+	private int id;
+	private String title;
 	private String qhint;
 	private float userscore = 0;
 	private List<String> userResponses = new ArrayList<String>();
@@ -37,21 +41,20 @@ public class Essay implements Serializable, QuizQuestion {
 		this.userscore = 0;
 	}
 	
-	public String getRefid() {
-		// TODO Auto-generated method stub
-		return this.refid;
+	public int getID() {
+		return this.id;
 	}
 	
-	public void setRefid(String refid) {
-		this.refid = refid;	
+	public void setID(int id) {
+		this.id = id;	
 	}
 
-	public String getQtext() {
-		return this.qtext;
+	public String getTitle() {
+		return this.title;
 	}
 	
-	public void setQtext(String qtext) {
-		this.qtext = qtext;	
+	public void setTitle(String title) {
+		this.title = title;	
 	}
 	
 	public void setResponseOptions(List<Response> responses) {
@@ -88,6 +91,21 @@ public class Essay implements Serializable, QuizQuestion {
 	
 	public int getMaxScore() {
 		return Integer.parseInt(this.getProp("maxscore"));
+	}
+	
+	public JSONObject responsesToJSON() {
+		JSONObject jo = new JSONObject();
+		for(String ur: userResponses ){
+			try {
+				jo.put("question_id", this.id);
+				jo.put("score",userscore);
+				jo.put("text", ur);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				 BugSenseHandler.log(TAG, e);
+			}
+		}
+		return jo;
 	}
 
 }

@@ -9,17 +9,17 @@ public class Response implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 5970350772982572264L;
-	private static final String TAG = "Response";
-	private String text;
+	public static final String TAG = "Response";
+	private String title;
 	private float score;
 	private HashMap<String,String> props = new HashMap<String,String>();
 	
 	
-	public String getText() {
-		return text;
+	public String getTitle() {
+		return title;
 	}
-	public void setText(String text) {
-		this.text = text;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public float getScore() {
 		return score;
