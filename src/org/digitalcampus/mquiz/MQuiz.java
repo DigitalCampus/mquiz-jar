@@ -228,7 +228,7 @@ public class MQuiz implements Serializable {
 	public JSONObject getResultObject() {
 		JSONObject json = new JSONObject();
 		try {
-			json.put("id", this.getID());
+			json.put("quiz_id", this.getID());
 			Date now = new Date();
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			json.put("attempt_date", simpleDateFormat.format(now));
