@@ -71,7 +71,7 @@ public class Numerical implements Serializable, QuizQuestion {
 						}
 					}
 				} catch (NumberFormatException nfe) {
-					BugSenseHandler.log(TAG, nfe);
+					// do nothing - just skip over this particular response option
 				}
 			}
 		}
