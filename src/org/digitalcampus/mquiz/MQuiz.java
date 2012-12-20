@@ -19,8 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bugsense.trace.BugSenseHandler;
-
 import android.util.Log;
 
 public class MQuiz implements Serializable {
@@ -58,7 +56,6 @@ public class MQuiz implements Serializable {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-			BugSenseHandler.log(TAG, e);
 			return false;
 		}
 		return true;
@@ -123,7 +120,6 @@ public class MQuiz implements Serializable {
 
 		} catch (JSONException e) {
 			e.printStackTrace();
-			BugSenseHandler.log(TAG, e);
 			return false;
 		}
 
@@ -242,7 +238,6 @@ public class MQuiz implements Serializable {
 			json.put("responses", responses);
 		} catch (JSONException e) {
 			e.printStackTrace();
-			BugSenseHandler.log(TAG, e);
 		}
 		return json;
 	}

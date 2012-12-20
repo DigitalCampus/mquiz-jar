@@ -11,8 +11,6 @@ import org.digitalcampus.mquiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bugsense.trace.BugSenseHandler;
-
 public class ShortAnswer implements Serializable, QuizQuestion {
 
 	private static final long serialVersionUID = 3539362553016059321L;
@@ -118,7 +116,6 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 				jo.put("text", ur);
 			} catch (JSONException e) {
 				e.printStackTrace();
-				BugSenseHandler.log(TAG, e);
 			}
 		}
 		return jo;

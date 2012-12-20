@@ -11,8 +11,6 @@ import org.digitalcampus.mquiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bugsense.trace.BugSenseHandler;
-
 public class Matching implements Serializable, QuizQuestion {
 
 	private static final long serialVersionUID = -7500128521011492086L;
@@ -43,8 +41,7 @@ public class Matching implements Serializable, QuizQuestion {
 			for (String ur : userResponses) {
 				if (ur.equals(r.getTitle())) {
 					total += r.getScore();
-				} else {
-				}
+				} 
 			}
 
 			// fix marking so that if one of the incorrect scores is selected
@@ -54,8 +51,6 @@ public class Matching implements Serializable, QuizQuestion {
 					total = 0;
 				}
 			}
-			
-			// TODO add feedback
 		}
 		int maxscore = Integer.parseInt(this.getProp("maxscore"));
 		if (total > maxscore) {
@@ -127,7 +122,6 @@ public class Matching implements Serializable, QuizQuestion {
 			jo.put("text", qrtext);
 		} catch (JSONException e) {
 			e.printStackTrace();
-			BugSenseHandler.log(TAG, e);
 		}
 		return jo;
 	}

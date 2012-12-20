@@ -11,8 +11,6 @@ import org.digitalcampus.mquiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bugsense.trace.BugSenseHandler;
-
 public class MultiSelect implements Serializable, QuizQuestion {
 
 	private static final long serialVersionUID = 936284577467681053L;
@@ -126,7 +124,6 @@ public class MultiSelect implements Serializable, QuizQuestion {
 			jo.put("text", qrtext);
 		} catch (JSONException e) {
 			e.printStackTrace();
-			BugSenseHandler.log(TAG, e);
 		}
 		return jo;
 	}
