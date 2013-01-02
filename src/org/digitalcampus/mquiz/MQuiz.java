@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.digitalcampus.mquiz.model.QuizQuestion;
 import org.digitalcampus.mquiz.model.Response;
@@ -49,10 +50,22 @@ public class MQuiz implements Serializable {
 			this.title = (String) json.get("title");
 			JSONObject props = json.getJSONObject("props");
 			this.maxscore = props.getLong("maxscore");
+			
+			int randomSelect = 0;
+			try {
+				randomSelect = props.getInt("randomselect");
+			} catch (JSONException e) {
+				
+			}
+			
 			// add questions
 			JSONArray questions = (JSONArray) json.get("questions");
-			for (int i = 0; i < questions.length(); i++) {
-				this.addQuestion((JSONObject) questions.get(i));
+			if (randomSelect > 0){
+				this.generateQuestionSet(questions, randomSelect);
+			} else {
+				for (int i = 0; i < questions.length(); i++) {
+					this.addQuestion((JSONObject) questions.get(i));
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -61,6 +74,37 @@ public class MQuiz implements Serializable {
 		return true;
 	}
 
+	private void generateQuestionSet(JSONArray questionChoices, int randomSelect){
+		Random generator = new Random();
+		while(this.questions.size() < randomSelect){
+			int randomNum = generator.nextInt(questionChoices.length());
+			boolean found = false;
+			JSONObject quizquestion;
+			try {
+				quizquestion = (JSONObject) questionChoices.get(randomNum);
+				JSONObject q = quizquestion.getJSONObject("question");
+				int qid = q.getInt("id");
+				for(int i=0; i < this.questions.size(); i++){
+					if (qid == this.questions.get(i).getID()){
+						found = true;
+					}
+				}
+				if(!found){
+					this.addQuestion(quizquestion);
+				}
+			} catch (JSONException e) {
+				
+			}
+		}
+		
+		// now set the new maxscore
+		float newMax = 0;
+		for(int i=0; i<this.questions.size(); i++){
+			newMax += this.questions.get(i).getMaxScore();
+		}
+		this.maxscore = newMax;
+	}
+	
 	private boolean addQuestion(JSONObject qObj) {
 		
 		// determine question type
