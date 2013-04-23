@@ -46,7 +46,11 @@ public class MultiSelect implements Serializable, QuizQuestion {
 					}
 				}  
 			}
-			// fix marking so that if one of the incorrect scores is selected final mark is 0
+			
+		}
+		
+		// fix marking so that if one of the incorrect scores is selected final mark is 0
+		for (Response r : responseOptions){
 			for(String ur: userResponses){
 				if (r.getTitle().equals(ur) && r.getScore() == 0){
 					total = 0;
