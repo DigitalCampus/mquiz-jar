@@ -11,6 +11,7 @@ import java.util.Random;
 import org.digitalcampus.mquiz.model.QuizQuestion;
 import org.digitalcampus.mquiz.model.Response;
 import org.digitalcampus.mquiz.model.questiontypes.Essay;
+import org.digitalcampus.mquiz.model.questiontypes.Info;
 import org.digitalcampus.mquiz.model.questiontypes.Matching;
 import org.digitalcampus.mquiz.model.questiontypes.MultiChoice;
 import org.digitalcampus.mquiz.model.questiontypes.MultiSelect;
@@ -125,6 +126,8 @@ public class MQuiz implements Serializable {
 				question = new ShortAnswer();
 			} else if (qtype.toLowerCase().equals(MultiSelect.TAG.toLowerCase())) {
 					question = new MultiSelect();
+			} else if (qtype.toLowerCase().equals(Info.TAG.toLowerCase())) {
+				question = new Info();
 			} else {
 				Log.d(TAG, "Question type " + qtype + " is not yet supported");
 				return false;
