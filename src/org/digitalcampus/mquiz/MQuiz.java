@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.digitalcampus.mquiz.model.QuizQuestion;
 import org.digitalcampus.mquiz.model.Response;
@@ -40,8 +41,19 @@ public class MQuiz implements Serializable {
 	private int currentq = 0;
 	private float userscore;
 	private List<QuizQuestion> questions = new ArrayList<QuizQuestion>();
-
+	private String instanceID;
+	
 	public MQuiz() {
+		this.setInstanceID();
+	}
+
+	public String getInstanceID() {
+		return instanceID;
+	}
+
+	public void setInstanceID() {
+		UUID guid = java.util.UUID.randomUUID();
+		this.instanceID = guid.toString();
 	}
 
 	public boolean load(String quiz) {
@@ -277,6 +289,7 @@ public class MQuiz implements Serializable {
 			json.put("attempt_date", simpleDateFormat.format(now));
 			json.put("score", this.getUserscore());
 			json.put("maxscore", this.getMaxscore());
+			json.put("instance_id",this.getInstanceID());
 			JSONArray responses = new JSONArray();
 			for(QuizQuestion q: questions){
 				JSONObject r = q.responsesToJSON();
