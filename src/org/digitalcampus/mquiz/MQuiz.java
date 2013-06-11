@@ -33,7 +33,7 @@ public class MQuiz implements Serializable {
 	public static final String MATCHING_REGEX = "\\|";
 	
 	private static final long serialVersionUID = -2416034891439585524L;
-	private String id;
+	private int id;
 	private String title;
 	private String url;
 	private float maxscore;
@@ -59,7 +59,7 @@ public class MQuiz implements Serializable {
 	public boolean load(String quiz) {
 		try {
 			JSONObject json = new JSONObject(quiz);
-			this.id = (String) json.get("id");
+			this.id = json.getInt("id");
 			this.title = (String) json.get("title");
 			JSONObject props = json.getJSONObject("props");
 			this.maxscore = props.getLong("maxscore");
@@ -224,11 +224,11 @@ public class MQuiz implements Serializable {
 		}
 	}
 
-	public String getID() {
+	public int getID() {
 		return this.id;
 	}
 
-	public void setID(String id) {
+	public void setID(int id) {
 		this.id = id;
 	}
 
