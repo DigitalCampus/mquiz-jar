@@ -260,8 +260,12 @@ public class MQuiz implements Serializable {
 		return this.currentq + 1;
 	}
 
-	public QuizQuestion getCurrentQuestion() {
-		return questions.get(this.currentq);
+	public QuizQuestion getCurrentQuestion() throws InvalidQuizException {
+		try {
+			return questions.get(this.currentq);
+		} catch (IndexOutOfBoundsException e ){
+			throw new InvalidQuizException(e);
+		}
 	}
 
 	public float getUserscore() {
