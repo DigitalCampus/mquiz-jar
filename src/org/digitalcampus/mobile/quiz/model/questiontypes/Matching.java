@@ -1,13 +1,13 @@
-package org.digitalcampus.mquiz.model.questiontypes;
+package org.digitalcampus.mobile.quiz.model.questiontypes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.digitalcampus.mquiz.MQuiz;
-import org.digitalcampus.mquiz.model.QuizQuestion;
-import org.digitalcampus.mquiz.model.Response;
+import org.digitalcampus.mobile.quiz.Quiz;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -117,13 +117,18 @@ public class Matching implements Serializable, QuizQuestion {
 			jo.put("score", this.getUserscore());
 			String qrtext = "";
 			for (String ur : userResponses) {
-				qrtext += ur + MQuiz.RESPONSE_SEPARATOR;
+				qrtext += ur + Quiz.RESPONSE_SEPARATOR;
 			}
 			jo.put("text", qrtext);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return jo;
+	}
+	
+	@Override
+	public boolean responseExpected() {
+		return true;
 	}
 
 }

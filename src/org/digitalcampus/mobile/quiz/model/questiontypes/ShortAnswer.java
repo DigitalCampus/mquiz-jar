@@ -1,4 +1,4 @@
-package org.digitalcampus.mquiz.model.questiontypes;
+package org.digitalcampus.mobile.quiz.model.questiontypes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.digitalcampus.mquiz.model.QuizQuestion;
-import org.digitalcampus.mquiz.model.Response;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -119,6 +119,11 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 			}
 		}
 		return jo;
+	}
+	
+	@Override
+	public boolean responseExpected() {
+		return true;
 	}
 
 }

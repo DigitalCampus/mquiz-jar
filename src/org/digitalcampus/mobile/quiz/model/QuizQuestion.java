@@ -1,4 +1,4 @@
-package org.digitalcampus.mquiz.model;
+package org.digitalcampus.mobile.quiz.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -40,5 +40,7 @@ public interface QuizQuestion extends Serializable {
 	public int getMaxScore();
 	
 	public JSONObject responsesToJSON();
+	
+	public boolean responseExpected();
 	
 }

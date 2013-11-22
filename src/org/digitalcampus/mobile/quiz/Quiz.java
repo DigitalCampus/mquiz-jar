@@ -1,4 +1,4 @@
-package org.digitalcampus.mquiz;
+package org.digitalcampus.mobile.quiz;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -9,24 +9,24 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import org.digitalcampus.mquiz.model.QuizQuestion;
-import org.digitalcampus.mquiz.model.Response;
-import org.digitalcampus.mquiz.model.questiontypes.Essay;
-import org.digitalcampus.mquiz.model.questiontypes.Info;
-import org.digitalcampus.mquiz.model.questiontypes.Matching;
-import org.digitalcampus.mquiz.model.questiontypes.MultiChoice;
-import org.digitalcampus.mquiz.model.questiontypes.MultiSelect;
-import org.digitalcampus.mquiz.model.questiontypes.Numerical;
-import org.digitalcampus.mquiz.model.questiontypes.ShortAnswer;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.Response;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Description;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Essay;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Matching;
+import org.digitalcampus.mobile.quiz.model.questiontypes.MultiChoice;
+import org.digitalcampus.mobile.quiz.model.questiontypes.MultiSelect;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Numerical;
+import org.digitalcampus.mobile.quiz.model.questiontypes.ShortAnswer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 
-public class MQuiz implements Serializable {
+public class Quiz implements Serializable {
 
-	public static final String TAG = "MQuiz";
+	public static final String TAG = "Quiz";
 	
 	public static final String RESPONSE_SEPARATOR = "||";
 	public static final String MATCHING_SEPARATOR = "|";
@@ -43,7 +43,7 @@ public class MQuiz implements Serializable {
 	private List<QuizQuestion> questions = new ArrayList<QuizQuestion>();
 	private String instanceID;
 	
-	public MQuiz() {
+	public Quiz() {
 		this.setInstanceID();
 	}
 
@@ -138,8 +138,8 @@ public class MQuiz implements Serializable {
 				question = new ShortAnswer();
 			} else if (qtype.toLowerCase().equals(MultiSelect.TAG.toLowerCase())) {
 					question = new MultiSelect();
-			} else if (qtype.toLowerCase().equals(Info.TAG.toLowerCase())) {
-				question = new Info();
+			} else if (qtype.toLowerCase().equals(Description.TAG.toLowerCase())) {
+				question = new Description();
 			} else {
 				Log.d(TAG, "Question type " + qtype + " is not yet supported");
 				return false;
@@ -257,7 +257,13 @@ public class MQuiz implements Serializable {
 	}
 
 	public int getCurrentQuestionNo() {
-		return this.currentq + 1;
+		int retNo = 0;
+		for(int i = 0; i < this.currentq + 1 ; i++){
+			if (questions.get(i).responseExpected()){
+				retNo ++;
+			}
+		}
+		return retNo;
 	}
 
 	public QuizQuestion getCurrentQuestion() throws InvalidQuizException {
@@ -281,7 +287,13 @@ public class MQuiz implements Serializable {
 	}
 
 	public int getTotalNoQuestions() {
-		return questions.size();
+		int noQs = 0;
+		for (QuizQuestion q: questions){
+			if (! (q instanceof Description)){
+				noQs++;
+			}
+		}
+		return noQs;
 	}
 
 	public JSONObject getResultObject() {

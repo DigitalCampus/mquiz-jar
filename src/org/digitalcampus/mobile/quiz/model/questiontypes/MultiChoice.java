@@ -1,20 +1,23 @@
-package org.digitalcampus.mquiz.model.questiontypes;
+package org.digitalcampus.mobile.quiz.model.questiontypes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-import org.digitalcampus.mquiz.MQuiz;
-import org.digitalcampus.mquiz.model.QuizQuestion;
-import org.digitalcampus.mquiz.model.Response;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MultiSelect implements Serializable, QuizQuestion {
+public class MultiChoice implements Serializable, QuizQuestion {
 
-	private static final long serialVersionUID = 936284577467681053L;
-	public static final String TAG = "MultiSelect";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6605393327170759582L;
+	public static final String TAG = "MultiChoice";
 	private int id;
 	private String title;
 	private List<Response> responseOptions = new ArrayList<Response>();
@@ -32,28 +35,19 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	}
 	
 	public void mark(){
+		
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
-		
 		float total = 0;
-		
 		for (Response r : responseOptions){
-			for (String ur : userResponses) {
-				if (ur.equals(r.getTitle())) {
+			Iterator<String> itr = this.userResponses.iterator();
+			while(itr.hasNext()) {
+				String a = itr.next(); 
+				if (r.getTitle().equals(a)){
 					total += r.getScore();
-					if(r.getProp("feedback") != null && !r.getProp("feedback").equals("")){
-						this.feedback += ur + ": " + r.getProp("feedback") + "\n\n";
+					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
+						this.feedback = r.getProp("feedback");
 					}
-				}  
-			}
-			
-		}
-		
-		// fix marking so that if one of the incorrect scores is selected final mark is 0
-		for (Response r : responseOptions){
-			for(String ur: userResponses){
-				if (r.getTitle().equals(ur) && r.getScore() == 0){
-					total = 0;
 				}
 			}
 		}
@@ -89,6 +83,11 @@ public class MultiSelect implements Serializable, QuizQuestion {
 		return this.userscore;
 	}
 
+	public void setUserResponse(List<String> str) {
+		this.userResponses = str;
+		
+	}
+
 	public List<String> getUserResponses() {
 		return this.userResponses;
 	}
@@ -103,6 +102,7 @@ public class MultiSelect implements Serializable, QuizQuestion {
 
 	public void setUserResponses(List<String> str) {
 		this.userResponses = str;
+		
 	}
 	
 	public String getFeedback() {
@@ -118,18 +118,22 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	
 	public JSONObject responsesToJSON() {
 		JSONObject jo = new JSONObject();
-		try {
-			jo.put("question_id", this.id);
-			jo.put("score",userscore);
-			String qrtext = "";
-			for(String ur: userResponses ){
-				qrtext += ur + MQuiz.RESPONSE_SEPARATOR;
+		for(String ur: userResponses ){
+			try {
+				jo.put("question_id", this.id);
+				jo.put("score",userscore);
+				jo.put("text", ur);
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			jo.put("text", qrtext);
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return jo;
 	}
+	
+	@Override
+	public boolean responseExpected() {
+		return true;
+	}
 
 }
+

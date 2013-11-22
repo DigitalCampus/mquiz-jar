@@ -1,22 +1,22 @@
-package org.digitalcampus.mquiz.model.questiontypes;
+package org.digitalcampus.mobile.quiz.model.questiontypes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.digitalcampus.mquiz.model.QuizQuestion;
-import org.digitalcampus.mquiz.model.Response;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Info implements Serializable, QuizQuestion {
+public class Description implements Serializable, QuizQuestion {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 809312927290284785L;
-	public static final String TAG = "Info";
+	public static final String TAG = "Description";
 	
 	private int id;
 	private float userscore = 0;
@@ -116,6 +116,11 @@ public class Info implements Serializable, QuizQuestion {
 			}
 		}
 		return jo;
+	}
+
+	@Override
+	public boolean responseExpected() {
+		return false;
 	}
 
 }
