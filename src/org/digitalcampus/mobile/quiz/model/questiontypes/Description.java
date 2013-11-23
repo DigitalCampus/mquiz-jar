@@ -1,7 +1,6 @@
 package org.digitalcampus.mobile.quiz.model.questiontypes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class Description implements Serializable, QuizQuestion {
 	private float userscore = 0;
 	private String title;
 	private HashMap<String,String> props = new HashMap<String,String>();
-	private List<String> userResponses = new ArrayList<String>();
 	
 	@Override
 	public void addResponseOption(Response r) {
@@ -106,14 +104,12 @@ public class Description implements Serializable, QuizQuestion {
 	@Override
 	public JSONObject responsesToJSON() {
 		JSONObject jo = new JSONObject();
-		for(String ur: userResponses ){
-			try {
-				jo.put("question_id", this.id);
-				jo.put("score",userscore);
-				jo.put("text", ur);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+		try {
+			jo.put("question_id", this.id);
+			jo.put("score",0);
+			jo.put("text", null);
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 		return jo;
 	}

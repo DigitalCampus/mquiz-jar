@@ -308,8 +308,10 @@ public class Quiz implements Serializable {
 			json.put("instance_id",this.getInstanceID());
 			JSONArray responses = new JSONArray();
 			for(QuizQuestion q: questions){
-				JSONObject r = q.responsesToJSON();
-				responses.put(r);
+				if(q.responseExpected()){
+					JSONObject r = q.responsesToJSON();
+					responses.put(r);
+				}
 			}
 			json.put("responses", responses);
 		} catch (JSONException e) {
