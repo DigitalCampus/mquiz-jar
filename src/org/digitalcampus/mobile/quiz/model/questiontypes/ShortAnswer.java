@@ -38,7 +38,9 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 				String a = itr.next(); 
 				if (r.getTitle().toLowerCase().equals(a.toLowerCase())){
 					total += r.getScore();
-					// TODO return feedback
+					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
+						this.feedback = r.getProp("feedback");
+					}
 				}
 			}
 		}
