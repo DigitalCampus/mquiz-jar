@@ -320,4 +320,7 @@ public class Quiz implements Serializable {
 		return json;
 	}
 
+	public List<QuizQuestion> getQuestions(){
+		return questions;
+	}
 }
