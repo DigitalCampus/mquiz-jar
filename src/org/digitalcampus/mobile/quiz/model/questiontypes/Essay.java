@@ -109,5 +109,11 @@ public class Essay implements Serializable, QuizQuestion {
 	public boolean responseExpected() {
 		return true;
 	}
+	
+	@Override
+	public int getScoreAsPercent() {
+		int pc = Integer.valueOf((int) (100* this.getUserscore()))/this.getMaxScore();
+		return pc;
+	}
 
 }

@@ -43,4 +43,6 @@ public interface QuizQuestion extends Serializable {
 	
 	public boolean responseExpected();
 	
+	public int getScoreAsPercent();
+	
 }

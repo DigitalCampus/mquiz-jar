@@ -119,4 +119,9 @@ public class Description implements Serializable, QuizQuestion {
 		return false;
 	}
 
+	@Override
+	public int getScoreAsPercent() {
+		return 0;
+	}
+
 }

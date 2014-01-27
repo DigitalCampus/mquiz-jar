@@ -137,4 +137,9 @@ public class MultiSelect implements Serializable, QuizQuestion {
 		return true;
 	}
 
+	@Override
+	public int getScoreAsPercent() {
+		int pc = Integer.valueOf((int) (100* this.getUserscore()))/this.getMaxScore();
+		return pc;
+	}
 }
