@@ -51,11 +51,13 @@ public class MultiChoice implements Serializable, QuizQuestion {
 				}
 			}
 		}
-		int maxscore = Integer.parseInt(this.getProp("maxscore"));
-		if (total > maxscore){
-			userscore = maxscore;
-		} else {
-			userscore = total;
+		if(this.getProp("maxscore") != null){
+			int maxscore = Integer.parseInt(this.getProp("maxscore"));
+			if (total > maxscore){
+				userscore = maxscore;
+			} else {
+				userscore = total;
+			}
 		}
 	}
 	
