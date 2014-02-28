@@ -111,6 +111,17 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 	
 	public JSONObject responsesToJSON() {
 		JSONObject jo = new JSONObject();
+		if(userResponses.size() == 0){
+			try {
+				jo.put("question_id", this.id);
+				jo.put("score",userscore);
+				jo.put("text", "");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return jo;
+		}
+		
 		for(String ur: userResponses ){
 			try {
 				jo.put("question_id", this.id);
@@ -120,6 +131,7 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 				e.printStackTrace();
 			}
 		}
+		
 		return jo;
 	}
 	
