@@ -125,6 +125,11 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 	
 	@Override
 	public boolean responseExpected() {
+		if (this.props.containsKey("required")){
+			System.out.println( this.getProp("required"));
+			System.out.println( Boolean.parseBoolean(this.getProp("required")));
+			return Boolean.valueOf(this.getProp("required"));
+		}
 		return true;
 	}
 	

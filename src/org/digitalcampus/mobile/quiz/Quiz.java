@@ -259,7 +259,7 @@ public class Quiz implements Serializable {
 	public int getCurrentQuestionNo() {
 		int retNo = 0;
 		for(int i = 0; i < this.currentq + 1 ; i++){
-			if (questions.get(i).responseExpected()){
+			if (!(questions.get(i) instanceof Description)){
 				retNo ++;
 			}
 		}
