@@ -1,6 +1,5 @@
 package org.digitalcampus.mobile.quiz.model.questiontypes;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import org.digitalcampus.mobile.quiz.model.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Description implements Serializable, QuizQuestion {
+public class Description implements QuizQuestion {
 
 	/**
 	 * 
@@ -21,6 +20,7 @@ public class Description implements Serializable, QuizQuestion {
 	private float userscore = 0;
 	private String title;
 	private HashMap<String,String> props = new HashMap<String,String>();
+	private boolean feedbackDisplayed = false;
 	
 	@Override
 	public void addResponseOption(Response r) {
@@ -122,6 +122,17 @@ public class Description implements Serializable, QuizQuestion {
 	@Override
 	public int getScoreAsPercent() {
 		return 0;
+	}
+
+	@Override
+	public void setFeedbackDisplayed(boolean feedbackDisplayed) {
+		this.feedbackDisplayed = feedbackDisplayed;
+		
+	}
+
+	@Override
+	public boolean getFeedbackDisplayed() {
+		return feedbackDisplayed;
 	}
 
 }

@@ -22,6 +22,7 @@ public class Matching implements Serializable, QuizQuestion {
 	private List<String> userResponses = new ArrayList<String>();
 	private HashMap<String, String> props = new HashMap<String, String>();
 	private String feedback = "";
+	private boolean feedbackDisplayed = false;
 
 	public void addResponseOption(Response r) {
 		responseOptions.add(r);
@@ -85,6 +86,9 @@ public class Matching implements Serializable, QuizQuestion {
 	}
 
 	public void setUserResponses(List<String> str) {
+		if (!str.equals(this.userResponses)){
+			this.setFeedbackDisplayed(false);
+		}
 		this.userResponses = str;
 	}
 
@@ -135,6 +139,17 @@ public class Matching implements Serializable, QuizQuestion {
 	public int getScoreAsPercent() {
 		int pc = Integer.valueOf((int) (100* this.getUserscore()))/this.getMaxScore();
 		return pc;
+	}
+	
+	@Override
+	public void setFeedbackDisplayed(boolean feedbackDisplayed) {
+		this.feedbackDisplayed = feedbackDisplayed;
+		
+	}
+
+	@Override
+	public boolean getFeedbackDisplayed() {
+		return feedbackDisplayed;
 	}
 
 }

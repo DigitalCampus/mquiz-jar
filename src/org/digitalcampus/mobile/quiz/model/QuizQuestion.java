@@ -9,40 +9,46 @@ import org.json.JSONObject;
 
 public interface QuizQuestion extends Serializable {
 	
-	public void addResponseOption(Response r); 
-	
-	public List<Response> getResponseOptions(); 
-	
-	public void setUserResponses(List<String> str);
-	
-	public List<String> getUserResponses();
-	
-	public void setResponseOptions(List<Response> responses); 
-	
-	public void mark();
-	
-	public int getID();
-	
-	public void setID(int id);
-	
-	public String getTitle();
-	
-	public void setTitle(String title);
 
-	public float getUserscore();
+	public abstract void addResponseOption(Response r); 
+	
+	public abstract List<Response> getResponseOptions(); 
+	
+	public abstract void setUserResponses(List<String> str);
+	
+	public abstract List<String> getUserResponses();
+	
+	public abstract void setResponseOptions(List<Response> responses); 
+	
+	public abstract void mark();
+	
+	public abstract int getID();
+	
+	public abstract void setID(int id);
+	
+	public abstract String getTitle();
+	
+	public abstract void setTitle(String title);
 
-	public void setProps(HashMap<String,String> props);
+	public abstract float getUserscore();
+
+	public abstract void setProps(HashMap<String,String> props);
 	
-	public String getProp(String key);
+	public abstract String getProp(String key);
 	
-	public String getFeedback();
+	public abstract String getFeedback();
 	
-	public int getMaxScore();
+	public abstract int getMaxScore();
 	
-	public JSONObject responsesToJSON();
+	public abstract JSONObject responsesToJSON();
 	
-	public boolean responseExpected();
+	public abstract boolean responseExpected();
 	
-	public int getScoreAsPercent();
+	public abstract int getScoreAsPercent();
+	
+	public abstract void setFeedbackDisplayed(boolean feedbackDisplayed);
+
+	public abstract boolean getFeedbackDisplayed();
+	
 	
 }
