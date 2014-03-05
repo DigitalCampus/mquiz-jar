@@ -49,13 +49,9 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 		}
 		if (total == 0){
 			for (Response r : responseOptions){
-				Iterator<String> itr2 = this.userResponses.iterator();
-				while(itr2.hasNext()) {
-					if (r.getTitle().toLowerCase().trim().equals("*")){
-						total += r.getScore();
-						if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
-							this.feedback = r.getProp("feedback");
-						}
+				if (r.getTitle().toLowerCase().equals("*")){
+					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
+						this.feedback = r.getProp("feedback");
 					}
 				}
 			}
@@ -103,6 +99,7 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 		if (!str.equals(this.userResponses)){
 			this.setFeedbackDisplayed(false);
 		}
+		this.userResponses = str;
 	}
 
 	@Override

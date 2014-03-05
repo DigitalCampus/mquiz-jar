@@ -124,7 +124,6 @@ public class MultiChoice implements Serializable, QuizQuestion {
 			this.setFeedbackDisplayed(false);
 		}
 		this.userResponses = str;
-		
 	}
 	
 	@Override
