@@ -78,6 +78,16 @@ public class Numerical implements Serializable, QuizQuestion {
 			}
 		}
 
+		if (score == 0){
+			for (Response r : responseOptions){
+				if (r.getTitle().toLowerCase().equals("*")){
+					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
+						this.feedback = r.getProp("feedback");
+					}
+				}
+			}
+		}
+		
 		int maxscore = Integer.parseInt(this.getProp("maxscore"));
 		if (score > maxscore) {
 			this.userscore = maxscore;
