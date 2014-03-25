@@ -42,6 +42,7 @@ public class Quiz implements Serializable {
 	private float userscore;
 	private List<QuizQuestion> questions = new ArrayList<QuizQuestion>();
 	private String instanceID;
+	private JSONObject props;
 	
 	public Quiz() {
 		this.setInstanceID();
@@ -61,7 +62,7 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(quiz);
 			this.id = json.getInt("id");
 			this.title = (String) json.get("title");
-			JSONObject props = json.getJSONObject("props");
+			this.props = json.getJSONObject("props");
 			this.maxscore = props.getLong("maxscore");
 			
 			int randomSelect = 0;
@@ -322,5 +323,29 @@ public class Quiz implements Serializable {
 
 	public List<QuizQuestion> getQuestions(){
 		return questions;
+	}
+	
+	public int getPassThreshold(){
+		try {
+			 return props.getInt("passthreshold");
+		} catch (JSONException e) {
+			return 0;
+		}
+	}
+	
+	public boolean isShowFeedback(){
+		try {
+			 return props.getBoolean("showfeedback");
+		} catch (JSONException e) {
+			return true;
+		}
+	}
+	
+	public boolean isAllowTryAgain(){
+		try {
+			 return props.getBoolean("allowtryagain");
+		} catch (JSONException e) {
+			return true;
+		}
 	}
 }
