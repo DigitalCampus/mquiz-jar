@@ -32,6 +32,10 @@ public class Quiz implements Serializable {
 	public static final String MATCHING_SEPARATOR = "|";
 	public static final String MATCHING_REGEX = "\\|";
 	
+	public static final int SHOW_FEEDBACK_ALWAYS = 1;
+	public static final int SHOW_FEEDBACK_NEVER = 0;
+	public static final int SHOW_FEEDBACK_ATEND = 2;
+	
 	private static final long serialVersionUID = -2416034891439585524L;
 	private int id;
 	private String title;
@@ -333,11 +337,11 @@ public class Quiz implements Serializable {
 		}
 	}
 	
-	public boolean isShowFeedback(){
+	public int getShowFeedback(){
 		try {
-			 return props.getBoolean("showfeedback");
+			return props.getInt("showfeedback");
 		} catch (JSONException e) {
-			return true;
+			return SHOW_FEEDBACK_ALWAYS;
 		}
 	}
 	
