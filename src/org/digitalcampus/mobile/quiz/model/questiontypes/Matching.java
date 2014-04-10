@@ -107,7 +107,20 @@ public class Matching implements Serializable, QuizQuestion {
 	public String getFeedback() {
 		this.feedback = "";
 		this.mark();
-		return this.feedback;
+		if(this.getScoreAsPercent() >= Quiz.QUIZ_QUESTION_PASS_THRESHOLD 
+				&& this.getProp("correctfeedback") != null 
+				&& !this.getProp("correctfeedback").equals("")){
+			return this.getProp("correctfeedback");
+		} else if(this.getScoreAsPercent() == 0
+				&& this.getProp("incorrectfeedback") != null 
+				&& !this.getProp("incorrectfeedback").equals("")){
+			return this.getProp("incorrectfeedback");
+		} else if (this.getProp("partiallycorrectfeedback") != null 
+				&& !this.getProp("partiallycorrectfeedback").equals("")){
+			return this.getProp("partiallycorrectfeedback");
+		} else {
+			return this.feedback;
+		}
 	}
 
 	public int getMaxScore() {

@@ -36,6 +36,9 @@ public class Quiz implements Serializable {
 	public static final int SHOW_FEEDBACK_NEVER = 0;
 	public static final int SHOW_FEEDBACK_ATEND = 2;
 	
+	public static final int QUIZ_DEFAULT_PASS_THRESHOLD = 99; // use 99 rather than 100 in case of rounding
+	public static final int QUIZ_QUESTION_PASS_THRESHOLD = 99; // use 99 rather than 100 in case of rounding
+	
 	private static final long serialVersionUID = -2416034891439585524L;
 	private int id;
 	private String title;
