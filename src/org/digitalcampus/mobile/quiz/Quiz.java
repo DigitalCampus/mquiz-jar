@@ -46,7 +46,7 @@ public class Quiz implements Serializable {
 	private float userscore;
 	private List<QuizQuestion> questions = new ArrayList<QuizQuestion>();
 	private String instanceID;
-	private JSONObject props;
+	private String propsSerialized;
 	
 	public Quiz() {
 		this.setInstanceID();
@@ -66,15 +66,10 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(quiz);
 			this.id = json.getInt("id");
 			this.title = (String) json.get("title");
-			this.props = json.getJSONObject("props");
-			this.maxscore = props.getLong("maxscore");
-			
-			int randomSelect = 0;
-			try {
-				randomSelect = props.getInt("randomselect");
-			} catch (JSONException e) {
-				
-			}
+			this.propsSerialized = json.get("props").toString();
+			this.maxscore = propsSerializedGetInt("maxscore",0);
+			int randomSelect = propsSerializedGetInt("randomselect",0);
+
 			
 			// add questions
 			JSONArray questions = (JSONArray) json.get("questions");
@@ -330,26 +325,36 @@ public class Quiz implements Serializable {
 	}
 	
 	public int getPassThreshold(){
-		try {
-			 return props.getInt("passthreshold");
-		} catch (JSONException e) {
-			return 0;
-		}
+		return propsSerializedGetInt("passthreshold",0);
 	}
 	
 	public int getShowFeedback(){
-		try {
-			return props.getInt("showfeedback");
-		} catch (JSONException e) {
-			return SHOW_FEEDBACK_ALWAYS;
-		}
+		return propsSerializedGetInt("showfeedback",SHOW_FEEDBACK_ALWAYS);
 	}
 	
 	public boolean isAllowTryAgain(){
+		return propsSerializedGetBoolean("allowtryagain",true);
+	}
+	
+	private int propsSerializedGetInt(String key, int defaultValue){
 		try {
-			 return props.getBoolean("allowtryagain");
+			JSONObject json = new JSONObject(propsSerialized);
+			return json.getInt(key);
 		} catch (JSONException e) {
-			return true;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return defaultValue;
+	}
+	
+	private boolean propsSerializedGetBoolean(String key, boolean defaultValue){
+		try {
+			JSONObject json = new JSONObject(propsSerialized);
+			return json.getBoolean(key);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return defaultValue;
 	}
 }
