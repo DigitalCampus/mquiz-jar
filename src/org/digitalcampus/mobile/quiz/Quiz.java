@@ -352,7 +352,7 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(propsSerialized);
 			return json.getInt(key);
 		} catch (JSONException e) {
-			e.printStackTrace();
+			// do nothing
 		}
 		return defaultValue;
 	}
@@ -362,7 +362,7 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(propsSerialized);
 			return json.getBoolean(key);
 		} catch (JSONException e) {
-			e.printStackTrace();
+			// do nothing
 		}
 		return defaultValue;
 	}
