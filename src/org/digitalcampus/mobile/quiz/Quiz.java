@@ -32,6 +32,10 @@ public class Quiz implements Serializable {
 	public static final String MATCHING_SEPARATOR = "|";
 	public static final String MATCHING_REGEX = "\\|";
 	
+	public static final int AVAILABILITY_ALWAYS = 0;
+	public static final int AVAILABILITY_SECTION = 1;
+	public static final int AVAILABILITY_COURSE = 2;
+	
 	public static final int SHOW_FEEDBACK_ALWAYS = 1;
 	public static final int SHOW_FEEDBACK_NEVER = 0;
 	public static final int SHOW_FEEDBACK_ATEND = 2;
@@ -335,6 +339,10 @@ public class Quiz implements Serializable {
 		return propsSerializedGetInt("showfeedback",SHOW_FEEDBACK_ALWAYS);
 	}
 	
+	public int getAvailability(){
+		return propsSerializedGetInt("availability",AVAILABILITY_ALWAYS);
+	}
+	
 	public boolean isAllowTryAgain(){
 		return propsSerializedGetBoolean("allowtryagain",true);
 	}
@@ -344,7 +352,6 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(propsSerialized);
 			return json.getInt(key);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return defaultValue;
@@ -355,7 +362,6 @@ public class Quiz implements Serializable {
 			JSONObject json = new JSONObject(propsSerialized);
 			return json.getBoolean(key);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return defaultValue;
