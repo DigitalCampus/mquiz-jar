@@ -1,3 +1,20 @@
+/* 
+ * This file is part of OppiaMobile - http://oppia-mobile.org/
+ * 
+ * OppiaMobile is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * OppiaMobile is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with OppiaMobile. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.digitalcampus.mobile.quiz;
 
 import java.io.Serializable;
@@ -5,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -45,7 +63,7 @@ public class Quiz implements Serializable {
 	
 	private static final long serialVersionUID = -2416034891439585524L;
 	private int id;
-	private String title;
+	private HashMap<String,String> title = new HashMap<String,String>();
 	private String url;
 	private float maxscore;
 	private boolean checked;
@@ -54,6 +72,7 @@ public class Quiz implements Serializable {
 	private List<QuizQuestion> questions = new ArrayList<QuizQuestion>();
 	private String instanceID;
 	private String propsSerialized;
+	private String defaultLang;
 	
 	public Quiz() {
 		this.setInstanceID();
@@ -68,11 +87,23 @@ public class Quiz implements Serializable {
 		this.instanceID = guid.toString();
 	}
 
-	public boolean load(String quiz) {
+	public boolean load(String quiz, String defaultLang) {
+		this.defaultLang = defaultLang;
 		try {
 			JSONObject json = new JSONObject(quiz);
 			this.id = json.getInt("id");
-			this.title = (String) json.get("title");
+			try {
+				JSONObject titleLangs = json.getJSONObject("title");
+				Iterator<?> keys = titleLangs.keys();
+
+		        while( keys.hasNext() ){
+		            String key = (String) keys.next();
+		            this.setTitleForLang(key, titleLangs.getString(key));
+		        }
+			} catch (JSONException e) {
+				e.printStackTrace();
+				this.setTitleForLang(this.defaultLang, (String) json.get("title"));
+			}
 			this.propsSerialized = json.get("props").toString();
 			this.maxscore = propsSerializedGetInt("maxscore",0);
 			int randomSelect = propsSerializedGetInt("randomselect",0);
@@ -153,7 +184,20 @@ public class Quiz implements Serializable {
 			}
 
 			question.setID(q.getInt("id"));
-			question.setTitle((String) q.get("title"));
+			
+			try {
+				JSONObject titleLangs = q.getJSONObject("title");
+				Iterator<?> keys = titleLangs.keys();
+
+		        while( keys.hasNext() ){
+		            String key = (String) keys.next();
+		            question.setTitleForLang(key, titleLangs.getString(key));
+		        }
+			} catch (JSONException e) {
+				e.printStackTrace();
+				question.setTitleForLang(this.defaultLang, (String) q.get("title"));
+			}
+			
 			JSONObject questionProps = (JSONObject) q.get("props");
 
 			HashMap<String, String> qProps = new HashMap<String, String>();
@@ -239,12 +283,12 @@ public class Quiz implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getTitle(String lang) {
+		return title.get(lang);
 	}
 
-	public void setTitle(String t) {
-		this.title = t;
+	public void setTitleForLang(String lang, String title) {
+		this.title.put(lang, title);
 	}
 
 	public String getUrl() {

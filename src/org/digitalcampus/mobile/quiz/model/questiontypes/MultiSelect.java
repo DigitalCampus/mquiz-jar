@@ -16,7 +16,7 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	private static final long serialVersionUID = 936284577467681053L;
 	public static final String TAG = "MultiSelect";
 	private int id;
-	private String title;
+	private HashMap<String,String> title = new HashMap<String,String>();
 	private List<Response> responseOptions = new ArrayList<Response>();
 	private float userscore = 0;
 	private List<String> userResponses = new ArrayList<String>();
@@ -80,13 +80,13 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public String getTitle() {
-		return this.title;
+	public String getTitle(String lang) {
+		return this.title.get(lang);
 	}
 	
 	@Override
-	public void setTitle(String title) {
-		this.title = title;	
+	public void setTitleForLang(String lang, String title) {
+		this.title.put(lang, title);
 	}
 
 	@Override

@@ -26,9 +26,9 @@ public interface QuizQuestion extends Serializable {
 	
 	public abstract void setID(int id);
 	
-	public abstract String getTitle();
+	public abstract String getTitle(String lang);
 	
-	public abstract void setTitle(String title);
+	public abstract void setTitleForLang(String lang, String title);
 
 	public abstract float getUserscore();
 

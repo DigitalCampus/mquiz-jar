@@ -18,7 +18,7 @@ public class Essay implements Serializable, QuizQuestion {
 	private static final long serialVersionUID = 1531985882092686497L;
 	public static final String TAG = "Essay";
 	private int id;
-	private String title;
+	private HashMap<String,String> title = new HashMap<String,String>();
 	private String qhint;
 	private float userscore = 0;
 	private List<String> userResponses = new ArrayList<String>();
@@ -48,12 +48,14 @@ public class Essay implements Serializable, QuizQuestion {
 		this.id = id;	
 	}
 
-	public String getTitle() {
-		return this.title;
+	@Override
+	public String getTitle(String lang) {
+		return this.title.get(lang);
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;	
+	@Override
+	public void setTitleForLang(String lang, String title) {
+		this.title.put(lang, title);
 	}
 	
 	public void setResponseOptions(List<Response> responses) {

@@ -16,7 +16,7 @@ public class Matching implements Serializable, QuizQuestion {
 	private static final long serialVersionUID = -7500128521011492086L;
 	public static final String TAG = "Matching";
 	private int id;
-	private String title;
+	private HashMap<String,String> title = new HashMap<String,String>();
 	private List<Response> responseOptions = new ArrayList<Response>();
 	private float userscore = 0;
 	private List<String> userResponses = new ArrayList<String>();
@@ -69,12 +69,14 @@ public class Matching implements Serializable, QuizQuestion {
 		this.id = id;	
 	}
 	
-	public String getTitle() {
-		return this.title;
+	@Override
+	public String getTitle(String lang) {
+		return this.title.get(lang);
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;	
+	@Override
+	public void setTitleForLang(String lang, String title) {
+		this.title.put(lang, title);
 	}
 
 	public void setResponseOptions(List<Response> responses) {

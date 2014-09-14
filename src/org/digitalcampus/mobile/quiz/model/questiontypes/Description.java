@@ -18,7 +18,7 @@ public class Description implements QuizQuestion {
 	
 	private int id;
 	private float userscore = 0;
-	private String title;
+	private HashMap<String,String> title = new HashMap<String,String>();
 	private HashMap<String,String> props = new HashMap<String,String>();
 	private boolean feedbackDisplayed = false;
 	
@@ -67,13 +67,13 @@ public class Description implements QuizQuestion {
 	}
 
 	@Override
-	public String getTitle() {
-		return this.title;
+	public String getTitle(String lang) {
+		return this.title.get(lang);
 	}
-
+	
 	@Override
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitleForLang(String lang, String title) {
+		this.title.put(lang, title);
 	}
 
 	@Override
