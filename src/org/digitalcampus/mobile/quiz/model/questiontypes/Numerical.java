@@ -40,7 +40,7 @@ public class Numerical implements Serializable, QuizQuestion {
 	}
 
 	@Override
-	public void mark() {
+	public void mark(String lang) {
 		Float userAnswer = null;
 		this.userscore = 0;
 		Iterator<String> itr = this.userResponses.iterator();
@@ -57,7 +57,7 @@ public class Numerical implements Serializable, QuizQuestion {
 			// loop through the valid answers and check against these
 			for (Response r : responseOptions) {
 				try {
-					Float respNumber = Float.parseFloat(r.getTitle());
+					Float respNumber = Float.parseFloat(r.getTitle(lang));
 					Float tolerance = (float) 0.0;
 					if(r.getProp("tolerance") != null){
 						tolerance = Float.parseFloat(r.getProp("tolerance"));
@@ -80,7 +80,7 @@ public class Numerical implements Serializable, QuizQuestion {
 
 		if (score == 0){
 			for (Response r : responseOptions){
-				if (r.getTitle().toLowerCase().equals("*")){
+				if (r.getTitle(lang).toLowerCase().equals("*")){
 					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
 						this.feedback = r.getProp("feedback");
 					}
@@ -145,10 +145,10 @@ public class Numerical implements Serializable, QuizQuestion {
 	}
 
 	@Override
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		// reset feedback back to nothing
 		this.feedback = "";
-		this.mark();
+		this.mark(lang);
 		return this.feedback;
 	}
 

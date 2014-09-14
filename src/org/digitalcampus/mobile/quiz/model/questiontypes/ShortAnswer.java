@@ -30,7 +30,7 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 	}
 
 	@Override
-	public void mark(){
+	public void mark(String lang){
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
 		
@@ -39,7 +39,7 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 			Iterator<String> itr = this.userResponses.iterator();
 			while(itr.hasNext()) {
 				String a = itr.next(); 
-				if (r.getTitle().toLowerCase().equals(a.toLowerCase())){
+				if (r.getTitle(lang).toLowerCase().equals(a.toLowerCase())){
 					total += r.getScore();
 					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
 						this.feedback = r.getProp("feedback");
@@ -49,7 +49,7 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 		}
 		if (total == 0){
 			for (Response r : responseOptions){
-				if (r.getTitle().toLowerCase().equals("*")){
+				if (r.getTitle(lang).toLowerCase().equals("*")){
 					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
 						this.feedback = r.getProp("feedback");
 					}
@@ -123,10 +123,10 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		// reset feedback back to nothing
 		this.feedback = "";
-		this.mark();
+		this.mark(lang);
 		
 		return this.feedback;
 	}

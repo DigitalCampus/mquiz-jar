@@ -32,7 +32,7 @@ public class Matching implements Serializable, QuizQuestion {
 		return responseOptions;
 	}
 
-	public void mark() {
+	public void mark(String lang) {
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
 
@@ -40,7 +40,7 @@ public class Matching implements Serializable, QuizQuestion {
 
 		for (Response r : responseOptions) {
 			for (String ur : userResponses) {
-				if (ur.equals(r.getTitle())) {
+				if (ur.equals(r.getTitle(lang))) {
 					total += r.getScore();
 				} 
 			}
@@ -48,7 +48,7 @@ public class Matching implements Serializable, QuizQuestion {
 			// fix marking so that if one of the incorrect scores is selected
 			// final mark is 0
 			for (String ur : userResponses) {
-				if (r.getTitle().equals(ur) && r.getScore() == 0) {
+				if (r.getTitle(lang).equals(ur) && r.getScore() == 0) {
 					total = 0;
 				}
 			}
@@ -106,9 +106,9 @@ public class Matching implements Serializable, QuizQuestion {
 		return this.userResponses;
 	}
 
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		this.feedback = "";
-		this.mark();
+		this.mark(lang);
 		if(this.getScoreAsPercent() >= Quiz.QUIZ_QUESTION_PASS_THRESHOLD 
 				&& this.getProp("correctfeedback") != null 
 				&& !this.getProp("correctfeedback").equals("")){

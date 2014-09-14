@@ -214,7 +214,20 @@ public class Quiz implements Serializable {
 			for (int j = 0; j < responses.length(); j++) {
 				JSONObject r = (JSONObject) responses.get(j);
 				Response responseOption = new Response();
-				responseOption.setTitle((String) r.get("title"));
+				
+				try {
+					JSONObject titleLangs = r.getJSONObject("title");
+					Iterator<?> keys = titleLangs.keys();
+
+			        while( keys.hasNext() ){
+			            String key = (String) keys.next();
+			            responseOption.setTitleForLang(key, titleLangs.getString(key));
+			        }
+				} catch (JSONException e) {
+					e.printStackTrace();
+					responseOption.setTitleForLang(this.defaultLang, (String) r.get("title"));
+				}
+				
 				responseOption.setScore(Float.parseFloat((String) r.get("score")));
 				JSONObject responseProps = (JSONObject) r.get("props");
 				HashMap<String, String> rProps = new HashMap<String, String>();

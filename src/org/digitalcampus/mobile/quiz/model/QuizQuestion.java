@@ -20,7 +20,7 @@ public interface QuizQuestion extends Serializable {
 	
 	public abstract void setResponseOptions(List<Response> responses); 
 	
-	public abstract void mark();
+	public abstract void mark(String lang);
 	
 	public abstract int getID();
 	
@@ -36,7 +36,7 @@ public interface QuizQuestion extends Serializable {
 	
 	public abstract String getProp(String key);
 	
-	public abstract String getFeedback();
+	public abstract String getFeedback(String lang);
 	
 	public abstract int getMaxScore();
 	

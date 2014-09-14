@@ -38,7 +38,7 @@ public class MultiChoice implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public void mark(){
+	public void mark(String lang){
 		
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
@@ -47,7 +47,7 @@ public class MultiChoice implements Serializable, QuizQuestion {
 			Iterator<String> itr = this.userResponses.iterator();
 			while(itr.hasNext()) {
 				String a = itr.next(); 
-				if (r.getTitle().equals(a)){
+				if (r.getTitle(lang).equals(a)){
 					total += r.getScore();
 					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
 						this.feedback = r.getProp("feedback");
@@ -95,14 +95,6 @@ public class MultiChoice implements Serializable, QuizQuestion {
 		return this.userscore;
 	}
 
-	/*public void setUserResponse(List<String> str) {
-		if (str != this.userResponses){
-			this.setFeedbackDisplayed(false);
-		}
-		this.userResponses = str;
-		
-	}*/
-
 	@Override
 	public List<String> getUserResponses() {
 		return this.userResponses;
@@ -127,10 +119,10 @@ public class MultiChoice implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		// reset feedback back to nothing
 		this.feedback = "";
-		this.mark();
+		this.mark(lang);
 		return this.feedback;
 	}
 	
