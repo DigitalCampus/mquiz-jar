@@ -52,7 +52,7 @@ public class Description implements QuizQuestion {
 	}
 
 	@Override
-	public void mark() {
+	public void mark(String lang) {
 		this.userscore = 0;
 	}
 
@@ -92,7 +92,7 @@ public class Description implements QuizQuestion {
 	}
 
 	@Override
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		return "";
 	}
 

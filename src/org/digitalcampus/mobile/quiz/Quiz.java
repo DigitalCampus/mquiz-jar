@@ -275,10 +275,10 @@ public class Quiz implements Serializable {
 		}
 	}
 
-	public void mark() {
+	public void mark(String lang) {
 		float total = 0;
 		for (QuizQuestion q : questions) {
-			q.mark();
+			q.mark(lang);
 			total += q.getUserscore();
 		}
 		if (total > maxscore) {

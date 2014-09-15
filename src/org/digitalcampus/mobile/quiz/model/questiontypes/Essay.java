@@ -19,31 +19,37 @@ public class Essay implements Serializable, QuizQuestion {
 	public static final String TAG = "Essay";
 	private int id;
 	private HashMap<String,String> title = new HashMap<String,String>();
-	private String qhint;
 	private float userscore = 0;
 	private List<String> userResponses = new ArrayList<String>();
 	private HashMap<String,String> props = new HashMap<String,String>();
 	private boolean feedbackDisplayed = false;
 	
+	@Override
 	public void addResponseOption(Response r) {
 		// do nothing
 	}
+	
+	@Override
 	public List<Response> getResponseOptions() {
 		return null;
 	}
 	
+	@Override
 	public List<String> getUserResponses() {
 		return this.userResponses;
 	}
 	
-	public void mark() {
+	@Override
+	public void mark(String lang) {
 		this.userscore = 0;
 	}
 	
+	@Override
 	public int getID() {
 		return this.id;
 	}
 	
+	@Override
 	public void setID(int id) {
 		this.id = id;	
 	}
@@ -58,30 +64,27 @@ public class Essay implements Serializable, QuizQuestion {
 		this.title.put(lang, title);
 	}
 	
+	@Override
 	public void setResponseOptions(List<Response> responses) {
 		// do nothing
 	}
 	
+	@Override
 	public float getUserscore() {
 		return this.userscore;
 	}
 	
-	public String getQhint() {
-		return this.qhint;
-	}
-	
-	public void setQhint(String qhint) {
-		this.qhint = qhint;
-	}
-	
+	@Override
 	public void setProps(HashMap<String,String> props) {
 		this.props = props;
 	}
 	
+	@Override
 	public String getProp(String key) {
 		return props.get(key);
 	}
 	
+	@Override
 	public void setUserResponses(List<String> str) {
 		if (!str.equals(this.userResponses)){
 			this.setFeedbackDisplayed(false);
@@ -89,14 +92,17 @@ public class Essay implements Serializable, QuizQuestion {
 		this.userResponses = str;
 	}
 	
-	public String getFeedback() {
+	@Override
+	public String getFeedback(String lang) {
 		return "";
 	}
 	
+	@Override
 	public int getMaxScore() {
 		return Integer.parseInt(this.getProp("maxscore"));
 	}
 	
+	@Override
 	public JSONObject responsesToJSON() {
 		JSONObject jo = new JSONObject();
 		

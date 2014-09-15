@@ -35,7 +35,7 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public void mark(){
+	public void mark(String lang){
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
 		
@@ -43,7 +43,7 @@ public class MultiSelect implements Serializable, QuizQuestion {
 		
 		for (Response r : responseOptions){
 			for (String ur : userResponses) {
-				if (ur.equals(r.getTitle())) {
+				if (ur.equals(r.getTitle(lang))) {
 					total += r.getScore();
 					if(r.getProp("feedback") != null && !r.getProp("feedback").equals("")){
 						this.feedback += ur + ": " + r.getProp("feedback") + "\n\n";
@@ -56,7 +56,7 @@ public class MultiSelect implements Serializable, QuizQuestion {
 		// fix marking so that if one of the incorrect scores is selected final mark is 0
 		for (Response r : responseOptions){
 			for(String ur: userResponses){
-				if (r.getTitle().equals(ur) && r.getScore() == 0){
+				if (r.getTitle(lang).equals(ur) && r.getScore() == 0){
 					total = 0;
 				}
 			}
@@ -123,10 +123,10 @@ public class MultiSelect implements Serializable, QuizQuestion {
 	}
 	
 	@Override
-	public String getFeedback() {
+	public String getFeedback(String lang) {
 		// reset feedback back to nothing
 		this.feedback = "";
-		this.mark();
+		this.mark(lang);
 		return this.feedback;
 	}
 	

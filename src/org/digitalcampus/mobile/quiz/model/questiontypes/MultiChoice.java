@@ -42,7 +42,7 @@ public class MultiChoice implements Serializable, QuizQuestion {
 		
 		// loop through the responses
 		// find whichever are set as selected and add up the responses
-		float total = 0;
+		float total = 0; 
 		for (Response r : responseOptions){
 			Iterator<String> itr = this.userResponses.iterator();
 			while(itr.hasNext()) {
