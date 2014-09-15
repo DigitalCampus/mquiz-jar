@@ -15,7 +15,14 @@ public class Response implements Serializable{
 	private HashMap<String,String> props = new HashMap<String,String>();
 	
 	public String getTitle(String lang) {
-		return title.get(lang);
+		if(title.containsKey(lang)){
+			return title.get(lang);
+		} else {
+			for (String key : title.keySet()) {
+				 return title.get(key);
+			}
+			return "";
+		}
 	}
 
 	public void setTitleForLang(String lang, String title) {

@@ -56,7 +56,14 @@ public class Essay implements Serializable, QuizQuestion {
 
 	@Override
 	public String getTitle(String lang) {
-		return this.title.get(lang);
+		if(title.containsKey(lang)){
+			return title.get(lang);
+		} else {
+			for (String key : title.keySet()) {
+				 return title.get(key);
+			}
+			return "";
+		}
 	}
 	
 	@Override
