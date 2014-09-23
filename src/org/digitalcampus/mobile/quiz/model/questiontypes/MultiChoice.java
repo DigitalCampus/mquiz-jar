@@ -49,8 +49,8 @@ public class MultiChoice implements Serializable, QuizQuestion {
 				String a = itr.next(); 
 				if (r.getTitle(lang).equals(a)){
 					total += r.getScore();
-					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
-						this.feedback = r.getProp("feedback");
+					if(r.getFeedback(lang) != null && !(r.getFeedback(lang).equals(""))){	
+						this.feedback = r.getFeedback(lang);
 					}
 				}
 			}

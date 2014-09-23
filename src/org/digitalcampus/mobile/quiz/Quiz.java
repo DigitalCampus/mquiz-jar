@@ -238,6 +238,7 @@ public class Quiz implements Serializable {
 					}
 				}
 				responseOption.setProps(rProps);
+				responseOption.setFeedback(this.defaultLang);
 				question.addResponseOption(responseOption);
 			}
 
@@ -245,7 +246,6 @@ public class Quiz implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 

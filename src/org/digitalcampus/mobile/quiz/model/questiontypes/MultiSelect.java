@@ -45,8 +45,8 @@ public class MultiSelect implements Serializable, QuizQuestion {
 			for (String ur : userResponses) {
 				if (ur.equals(r.getTitle(lang))) {
 					total += r.getScore();
-					if(r.getProp("feedback") != null && !r.getProp("feedback").equals("")){
-						this.feedback += ur + ": " + r.getProp("feedback") + "\n\n";
+					if(r.getFeedback(lang) != null && !(r.getFeedback(lang).equals(""))){	
+						this.feedback += ur + ": " + r.getFeedback(lang) + "\n\n";;
 					}
 				}  
 			}

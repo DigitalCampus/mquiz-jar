@@ -2,6 +2,10 @@ package org.digitalcampus.mobile.quiz.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Response implements Serializable{
 
@@ -13,6 +17,7 @@ public class Response implements Serializable{
 	private HashMap<String,String> title = new HashMap<String,String>();
 	private float score;
 	private HashMap<String,String> props = new HashMap<String,String>();
+	private HashMap<String,String> feedback = new HashMap<String,String>();
 	
 	public String getTitle(String lang) {
 		if(title.containsKey(lang)){
@@ -43,5 +48,35 @@ public class Response implements Serializable{
 	
 	public String getProp(String key) {
 		return props.get(key);
-	}	
+	}
+	
+	public void setFeedback(String defaultLang){
+		try {
+			JSONObject feedbackLangs = new JSONObject(this.getProp("feedback"));
+			Iterator<?> keys = feedbackLangs.keys();
+
+	        while( keys.hasNext() ){
+	            String key = (String) keys.next();
+	            this.setFeedbackForLang(key, feedbackLangs.getString(key));
+	        }
+		} catch (JSONException e) {
+			e.printStackTrace();
+			this.setFeedbackForLang(defaultLang, (String) this.getProp("feedback"));
+		}
+	}
+	
+	private void setFeedbackForLang(String lang, String title){
+		this.feedback.put(lang, title);
+	}
+	
+	public String getFeedback(String lang) {
+		if(feedback.containsKey(lang)){
+			return feedback.get(lang);
+		} else {
+			for (String key : feedback.keySet()) {
+				 return feedback.get(key);
+			}
+			return "";
+		}
+	}
 }

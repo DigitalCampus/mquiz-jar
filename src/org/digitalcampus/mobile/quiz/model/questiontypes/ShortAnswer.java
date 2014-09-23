@@ -41,8 +41,8 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 				String a = itr.next(); 
 				if (r.getTitle(lang).toLowerCase().equals(a.toLowerCase())){
 					total += r.getScore();
-					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
-						this.feedback = r.getProp("feedback");
+					if(r.getFeedback(lang) != null && !(r.getFeedback(lang).equals(""))){	
+						this.feedback = r.getFeedback(lang);
 					}
 				}
 			}
@@ -50,8 +50,8 @@ public class ShortAnswer implements Serializable, QuizQuestion {
 		if (total == 0){
 			for (Response r : responseOptions){
 				if (r.getTitle(lang).toLowerCase().equals("*")){
-					if(r.getProp("feedback") != null && !(r.getProp("feedback").equals(""))){
-						this.feedback = r.getProp("feedback");
+					if(r.getFeedback(lang) != null && !(r.getFeedback(lang).equals(""))){	
+						this.feedback = r.getFeedback(lang);
 					}
 				}
 			}
