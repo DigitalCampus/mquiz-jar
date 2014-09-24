@@ -199,14 +199,15 @@ public class Quiz implements Serializable {
 			}
 			
 			JSONObject questionProps = (JSONObject) q.get("props");
-
+			
 			HashMap<String, String> qProps = new HashMap<String, String>();
-			for (int k = 0; k < questionProps.names().length(); k++) {
-				qProps.put(questionProps.names().getString(k),
-						questionProps.getString(questionProps.names().getString(k)));
+			if (questionProps.names() != null){
+				for (int k = 0; k < questionProps.names().length(); k++) {
+					qProps.put(questionProps.names().getString(k),
+							questionProps.getString(questionProps.names().getString(k)));
+				}
+				question.setProps(qProps);
 			}
-			question.setProps(qProps);
-
 			this.questions.add(question);
 
 			// now add response options for this question

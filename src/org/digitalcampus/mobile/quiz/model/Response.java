@@ -51,17 +51,19 @@ public class Response implements Serializable{
 	}
 	
 	public void setFeedback(String defaultLang){
-		try {
-			JSONObject feedbackLangs = new JSONObject(this.getProp("feedback"));
-			Iterator<?> keys = feedbackLangs.keys();
-
-	        while( keys.hasNext() ){
-	            String key = (String) keys.next();
-	            this.setFeedbackForLang(key, feedbackLangs.getString(key));
-	        }
-		} catch (JSONException e) {
-			e.printStackTrace();
-			this.setFeedbackForLang(defaultLang, (String) this.getProp("feedback"));
+		if (this.props.containsKey("feedback")){
+			try {
+				JSONObject feedbackLangs = new JSONObject(this.getProp("feedback"));
+				Iterator<?> keys = feedbackLangs.keys();
+	
+		        while( keys.hasNext() ){
+		            String key = (String) keys.next();
+		            this.setFeedbackForLang(key, feedbackLangs.getString(key));
+		        }
+			} catch (JSONException e) {
+				e.printStackTrace();
+				this.setFeedbackForLang(defaultLang, (String) this.getProp("feedback"));
+			}
 		}
 	}
 	

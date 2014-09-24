@@ -3,6 +3,7 @@ package org.digitalcampus.mobile.quiz.model.questiontypes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.digitalcampus.mobile.quiz.Quiz;
@@ -119,16 +120,34 @@ public class Matching implements Serializable, QuizQuestion {
 		if(this.getScoreAsPercent() >= Quiz.QUIZ_QUESTION_PASS_THRESHOLD 
 				&& this.getProp("correctfeedback") != null 
 				&& !this.getProp("correctfeedback").equals("")){
-			return this.getProp("correctfeedback");
+			return this.getFeedback(lang,"correctfeedback");
 		} else if(this.getScoreAsPercent() == 0
 				&& this.getProp("incorrectfeedback") != null 
 				&& !this.getProp("incorrectfeedback").equals("")){
-			return this.getProp("incorrectfeedback");
+			return this.getFeedback(lang,"incorrectfeedback");
 		} else if (this.getProp("partiallycorrectfeedback") != null 
 				&& !this.getProp("partiallycorrectfeedback").equals("")){
-			return this.getProp("partiallycorrectfeedback");
+			return this.getFeedback(lang,"partiallycorrectfeedback");
 		} else {
 			return this.feedback;
+		}
+	}
+	
+	private String getFeedback(String lang, String fbKey){
+		try {
+			JSONObject feedbackLangs = new JSONObject(this.getProp(fbKey));
+			if(feedbackLangs.has(lang)){
+				return feedbackLangs.getString(lang);
+			} else {
+				Iterator<?> keys = feedbackLangs.keys();
+				while( keys.hasNext() ){
+		            String key = (String) keys.next();
+		            return feedbackLangs.getString(key);
+		        }
+				return "";
+			}
+		} catch (JSONException e) {
+			return this.getProp(fbKey);
 		}
 	}
 
