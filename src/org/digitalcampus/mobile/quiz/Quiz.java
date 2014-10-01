@@ -185,7 +185,7 @@ public class Quiz implements Serializable {
 
 			question.setID(q.getInt("id"));
 			
-			try {
+			if (q.get("title") instanceof JSONObject){
 				JSONObject titleLangs = q.getJSONObject("title");
 				Iterator<?> keys = titleLangs.keys();
 
@@ -193,9 +193,10 @@ public class Quiz implements Serializable {
 		            String key = (String) keys.next();
 		            question.setTitleForLang(key, titleLangs.getString(key));
 		        }
-			} catch (JSONException e) {
-				e.printStackTrace();
-				question.setTitleForLang(this.defaultLang, (String) q.get("title"));
+			} else if (q.get("title") instanceof Integer){
+				question.setTitleForLang(this.defaultLang, String.valueOf(q.getInt("title")));
+			} else {
+				question.setTitleForLang(this.defaultLang, q.getString("title"));
 			}
 			
 			JSONObject questionProps = (JSONObject) q.get("props");
@@ -216,19 +217,24 @@ public class Quiz implements Serializable {
 				JSONObject r = (JSONObject) responses.get(j);
 				Response responseOption = new Response();
 				
-				try {
+				if (r.get("title") instanceof JSONObject){
 					JSONObject titleLangs = r.getJSONObject("title");
 					Iterator<?> keys = titleLangs.keys();
 
 			        while( keys.hasNext() ){
 			            String key = (String) keys.next();
-			            responseOption.setTitleForLang(key, titleLangs.getString(key));
+			            if (titleLangs.get(key) instanceof Integer){
+							responseOption.setTitleForLang(key, String.valueOf(titleLangs.getInt(key)));
+						} else {
+							responseOption.setTitleForLang(key, titleLangs.getString(key));
+						}
 			        }
-				} catch (JSONException e) {
-					e.printStackTrace();
-					responseOption.setTitleForLang(this.defaultLang, (String) r.get("title"));
+				} else if (r.get("title") instanceof Integer){
+					responseOption.setTitleForLang(this.defaultLang, String.valueOf(r.getInt("title")));
+				} else {
+					responseOption.setTitleForLang(this.defaultLang, r.getString("title"));
 				}
-				
+			
 				responseOption.setScore(Float.parseFloat((String) r.get("score")));
 				JSONObject responseProps = (JSONObject) r.get("props");
 				HashMap<String, String> rProps = new HashMap<String, String>();

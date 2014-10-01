@@ -61,7 +61,6 @@ public class Response implements Serializable{
 		            this.setFeedbackForLang(key, feedbackLangs.getString(key));
 		        }
 			} catch (JSONException e) {
-				e.printStackTrace();
 				this.setFeedbackForLang(defaultLang, (String) this.getProp("feedback"));
 			}
 		}
