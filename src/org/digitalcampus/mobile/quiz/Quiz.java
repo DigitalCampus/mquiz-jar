@@ -92,7 +92,8 @@ public class Quiz implements Serializable {
 		try {
 			JSONObject json = new JSONObject(quiz);
 			this.id = json.getInt("id");
-			try {
+
+			if (json.get("title") instanceof JSONObject){
 				JSONObject titleLangs = json.getJSONObject("title");
 				Iterator<?> keys = titleLangs.keys();
 
@@ -100,9 +101,11 @@ public class Quiz implements Serializable {
 		            String key = (String) keys.next();
 		            this.setTitleForLang(key, titleLangs.getString(key));
 		        }
-			} catch (JSONException e) {
-				e.printStackTrace();
-				this.setTitleForLang(this.defaultLang, (String) json.get("title"));
+			} else if (json.get("title") instanceof String) {
+				this.setTitleForLang(this.defaultLang, json.getString("title"));
+			} else {
+				//fallback
+				this.setTitleForLang(this.defaultLang, "unknown");
 			}
 			this.propsSerialized = json.get("props").toString();
 			this.maxscore = propsSerializedGetInt("maxscore",0);
