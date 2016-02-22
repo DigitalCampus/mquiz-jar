@@ -174,8 +174,12 @@ public class MultiChoice implements Serializable, QuizQuestion {
 	
 	@Override
 	public int getScoreAsPercent() {
-		int pc = Integer.valueOf((int) (100* this.getUserscore()))/this.getMaxScore();
-		return pc;
+		if (this.getMaxScore() > 0){
+			int pc = Integer.valueOf((int) (100* this.getUserscore()))/this.getMaxScore();
+			return pc;
+		} else {
+			return 0;
+		}
 	}
 	
 	@Override
