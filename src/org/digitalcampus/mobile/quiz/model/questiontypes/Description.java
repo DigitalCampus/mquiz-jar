@@ -114,7 +114,7 @@ public class Description implements QuizQuestion {
 		try {
 			jo.put("question_id", this.id);
 			jo.put("score",0);
-			jo.put("text", null);
+			jo.put("text", (String) null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
